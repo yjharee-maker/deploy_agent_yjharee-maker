@@ -101,14 +101,14 @@ cat > "$Project_dir/reports/reports.log" <<'LOG'
 [2026-02-06 18:10:01.469424] ALERT SENT TO charlie@example.com: URGENT: Charlie Davis, your attendance is 26.7%. You will fail this class.
 LOG
 echo "Project structure created successfully."
-# Ask the user if they want to update the attendance thresholds
-read -p "Do you want to update the attendance thresholds? (y/n): " choice
+#Updating the attendance thresholds
+read -p "Update the attendance thresholds? (y/n): " choice
 if [ "$choice" = "y" ]; then
 	read -p "Enter Warning threshold: " warning
 	warning=${warning:-75}
 	read -p "Enter Failure threshold: " failure
 	failure=${failure:-50}
-	# Update the values in config.json
+	# Update config.json
 	sed -i "s/\"warning\": [0-9]*/\"warning\": $warning/" \
 		"$Project_dir/Helpers/config.json"
 	sed -i "s/\"failure\": [0-9]*/\"failure\": $failure/" \
@@ -119,9 +119,9 @@ else
 fi
 # Verify that Python 3 is installed
 if python3 --version; then
-	echo "SUCCESS: Python 3 is installed."
+	echo "Python is installed."
 else
-	echo "WARNING: Python 3 is not installed."
+	echo "Python isn't installed."
 fi
 # Check that the required application directory exists
 if [ -d "$Project_dir" ] && \
@@ -131,9 +131,9 @@ if [ -d "$Project_dir" ] && \
 else
 	echo "Needed structure is missing."
 fi
-echo "Attendance tracker is running"
-echo "Press Ctrl+C to cancel and archive the current state."
+echo "Tracker running"
+echo "Press Ctrl+C to stop and archive"
 while true; do
-    echo "Processing attendance data..."
+    echo "Processing attendance data"
     sleep 2
 done
