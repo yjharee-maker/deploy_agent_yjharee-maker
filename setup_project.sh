@@ -1,29 +1,29 @@
 #!/bin/bash
 # Project directory and archive name
-PROJECT_DIR="attendance_tracker_v1"
+Project_dir="attendance_tracker_v1"
 i="$1"
-ARCHIVE_NAME="attendance_tracker_${i}_archive.tar.gz"
+archive_name="attendance_tracker_${i}_archive.tar.gz"
 handle_interrupt() {
 	# Script interrupted by user (Ctrl+C).
 	echo "Archiving the current project state"
 	# Check that the project directory exists
-	if [ -d "$PROJECT_DIR" ]; then
-		tar -czf "$ARCHIVE_NAME" "$PROJECT_DIR"
-		echo "Archive created: $ARCHIVE_NAME"
-		rm -rf "$PROJECT_DIR"
+	if [ -d "$Project_dir" ]; then
+		tar -czf "$archive_name" "$Project_dir"
+		echo "Archive created: $archive_name"
+		rm -rf "$Project_dir"
 		echo "Incomplete project directory deleted."
 	else
 		echo "Project directory does not exist."
 	fi
 	exit 1
 }
-# Catch SIGINT (Ctrl+C)
+# Catch SIGINT
 trap 'handle_interrupt' SIGINT
-#The required application directory and its structure
-mkdir -p "$PROJECT_DIR/Helpers" "$PROJECT_DIR/reports"
+# The required application directory and its structure
+mkdir -p "$Project_dir/Helpers" "$Project_dir/reports"
 # Required files
-touch "$PROJECT_DIR/attendance_checker.py" "$PROJECT_DIR/Helpers/assets.csv" "$PROJECT_DIR/Helpers/config.json" "$PROJECT_DIR/reports/reports.log"
-cat > "$PROJECT_DIR/attendance_checker.py" <<'PYTHON'
+touch "$Project_dir/attendance_checker.py" "$Project_dir/Helpers/assets.csv" "$Project_dir/Helpers/config.json" "$Project_dir/reports/reports.log"
+cat > "$Project_dir/attendance_checker.py" <<'PYTHON'
 #!/usr/bin/python3
 import csv
 import json
@@ -78,14 +78,14 @@ def run_attendance_check():
 if __name__ == "__main__":
 	run_attendance_check()
 PYTHON
-cat > "$PROJECT_DIR/Helpers/assets.csv" <<'CSV'
+cat > "$Project_dir/Helpers/assets.csv" <<'CSV'
 Email,Names,Attendance Count,Absence Count
 alice@example.com,Alice Johnson,14,1
 bob@example.com,Bob Smith,7,8
 charlie@example.com,Charlie Davis,4,11
 diana@example.com,Diana Prince,15,0
 CSV
-cat > "$PROJECT_DIR/Helpers/config.json" <<'JSON'
+cat > "$Project_dir/Helpers/config.json" <<'JSON'
 {
   "thresholds": {
     "warning": 75,
@@ -95,7 +95,7 @@ cat > "$PROJECT_DIR/Helpers/config.json" <<'JSON'
   "total_sessions": 15
 }
 JSON
-cat > "$PROJECT_DIR/reports/reports.log" <<'LOG'
+cat > "$Project_dir/reports/reports.log" <<'LOG'
 --- Attendance Report Run: 2026-02-06 18:10:01.468726 ---
 [2026-02-06 18:10:01.469363] ALERT SENT TO bob@example.com: URGENT: Bob Smith, your attendance is 46.7%. You will fail this class.
 [2026-02-06 18:10:01.469424] ALERT SENT TO charlie@example.com: URGENT: Charlie Davis, your attendance is 26.7%. You will fail this class.
@@ -110,9 +110,9 @@ if [ "$choice" = "y" ]; then
 	failure=${failure:-50}
 	# Update the values in config.json
 	sed -i "s/\"warning\": [0-9]*/\"warning\": $warning/" \
-		"$PROJECT_DIR/Helpers/config.json"
+		"$Project_dir/Helpers/config.json"
 	sed -i "s/\"failure\": [0-9]*/\"failure\": $failure/" \
-		"$PROJECT_DIR/Helpers/config.json"
+		"$Project_dir/Helpers/config.json"
 	echo "Updated successfully."
 else
 	echo "No changed."
@@ -124,9 +124,9 @@ else
 	echo "WARNING: Python 3 is not installed."
 fi
 # Check that the required application directory exists
-if [ -d "$PROJECT_DIR" ] && \
-   [ -d "$PROJECT_DIR/Helpers" ] && \
-   [ -d "$PROJECT_DIR/reports" ]; then
+if [ -d "$Project_dir" ] && \
+   [ -d "$Project_dir/Helpers" ] && \
+   [ -d "$Project_dir/reports" ]; then
 	echo "Required app dir structure is present."
 else
 	echo "Needed structure is missing."
