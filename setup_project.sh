@@ -64,16 +64,12 @@ echo "--- Attendance Report Run: 2026-02-06 18:10:01.468726 ---
 [2026-02-06 18:10:01.469424] ALERT SENT TO charlie@example.com: URGENT: Charlie Davis, your attendance is 26.7%. You will fail this class." > attendance_tracker_v1/reports/reports.log
 # Ask the user if they want to update the attendance thresholds 
 read -p "Do you want to update the attendance thresholds? (y/n): " choice 
-if [ "$choice" = "y" ]; then 
-	# Ask for the new Warning threshold 
+if [ "$choice" = "y" ]; then  
 	read -p "Enter Warning threshold : " warning 
-	warning=${warning:-75} 
-	# Ask for the new Failure threshold 
+	warning=${warning:-75}  
 	read -p "Enter Failure threshold : " failure 
 	failure=${failure:-50} 
-	# Update the Warning threshold 
 	sed -i "s/\"warning_threshold\": [0-9]*/\"warning_threshold\": $warning/" config.json 
-	# Update the Failure threshold 
 	sed -i "s/\"failure_threshold\": [0-9]*/\"failure_threshold\": $failure/" config.json 
 	echo "Attendance thresholds updated successfully." 
 else 
@@ -99,8 +95,7 @@ handle_interrupt() {
 	exit 1 
 } 
 # Catch SIGINT (Ctrl+C) and call handle_interrupt 
-trap 'handle_interrupt' SIGINT 
-# Create the project directory 
+trap 'handle_interrupt' SIGINT  
 mkdir -p "$PROJECT_DIR" 
 echo "Attendance tracker is running..." 
 echo "Press Ctrl+C to cancel and archive the current state." 
@@ -108,7 +103,7 @@ while true; do
 	echo "Processing attendance data..." 
 	sleep 2 
 done
-# Health Check: verify that Python 3 is installed
+# Verify that Python 3 is installed
 if python3 --version; then
 	echo "SUCCESS: Python 3 is installed."
 else
