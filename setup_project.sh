@@ -87,12 +87,12 @@ diana@example.com,Diana Prince,15,0
 CSV
 cat > "$Project_dir/Helpers/config.json" <<'JSON'
 {
-  "thresholds": {
-    "warning": 75,
-    "failure": 50
-  },
-  "run_mode": "live",
-  "total_sessions": 15
+"thresholds": {
+	"warning": 75,
+	"failure": 50
+},
+"run_mode": "live",
+"total_sessions": 15
 }
 JSON
 cat > "$Project_dir/reports/reports.log" <<'LOG'
@@ -125,8 +125,8 @@ else
 fi
 # Check that the required application directory exists
 if [ -d "$Project_dir" ] && \
-   [ -d "$Project_dir/Helpers" ] && \
-   [ -d "$Project_dir/reports" ]; then
+[ -d "$Project_dir/Helpers" ] && \
+[ -d "$Project_dir/reports" ]; then
 	echo "Required app dir structure is present."
 else
 	echo "Needed structure is missing."
